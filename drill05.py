@@ -35,10 +35,16 @@ def reset_world():
     frame = 0
     action = 3
 
+    set_new_target_arrow()
+
+
+def set_new_target_arrow():
+    global hx, hy, sx, sy, t
     # hx, hy = 50, 50
     hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)
     sx, sy = cx, cy
     t = 0.0
+
 
 def render_world():
     clear_canvas()
@@ -61,7 +67,9 @@ def update_world():
         cx = (1 - t) * sx + t * hx
         cy = (1 - t) * sy + t * hy
         t += 0.001
-
+    else:
+        cx, cy = hx, hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴
+        set_new_target_arrow()
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 hide_cursor()
