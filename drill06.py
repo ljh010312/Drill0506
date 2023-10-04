@@ -48,14 +48,20 @@ def set_new_target_arrow():
     global hx, hy, sx, sy, t
     global action
     global frame
-    sx, sy = cx, cy
-    # hx, hy = 50, 50
-    hx, hy = points[0]
+    global target_exists
 
-    t = 0.0
-
-    action = 1 if sx < hx else 0
-    frame = 0
+    if points:
+        sx, sy = cx, cy
+        # hx, hy = 50, 50
+        hx, hy = points[0]
+        t = 0.0
+        action = 1 if sx < hx else 0
+        frame = 0
+        target_exists = True
+    else:
+        action = 3 if action == 1 else 2
+        frame = 0
+        target_exists = False
 
 def render_world():
     clear_canvas()
@@ -74,13 +80,16 @@ def update_world():
 
     frame = (frame + 1) % 8
 
-    if t <= 1.0:
-        cx = (1 - t) * sx + t * hx
-        cy = (1 - t) * sy + t * hy
-        t += 0.001
-    else:
-        cx, cy = hx, hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴
-        set_new_target_arrow()
+    if target_exists:
+        if t <= 1.0:
+            cx = (1 - t) * sx + t * hx
+            cy = (1 - t) * sy + t * hy
+            t += 0.001
+        else:
+
+            cx, cy = hx, hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴
+            del points[0]
+            set_new_target_arrow()
 
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
