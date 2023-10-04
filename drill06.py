@@ -67,6 +67,7 @@ def set_new_target_arrow():
         frame = 0
         target_exists = False
 
+
 def render_world():
     clear_canvas()
     TUK_ground.draw(TUK_WIDTH // 2, TUK_HEIGHT // 2)
@@ -90,11 +91,12 @@ def update_world():
             cy = (1 - t) * sy + t * hy
             t += 0.001
         else:
-            cx, cy = hx, hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴
+            cx, cy = hx, hy  # 캐릭터 위치를 목적지 위치와 정확히 일치시킴
             del points[0]
             set_new_target_arrow()
     elif points:
         set_new_target_arrow()
+
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 hide_cursor()
