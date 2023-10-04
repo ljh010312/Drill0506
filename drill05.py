@@ -26,7 +26,6 @@ def handle_events():
 
 def reset_world():
     global running, cx, cy, frame
-    global hx, hy, sx, sy
     global t
     global action
 
@@ -40,11 +39,14 @@ def reset_world():
 
 def set_new_target_arrow():
     global hx, hy, sx, sy, t
+    global action
+    global frame
     # hx, hy = 50, 50
     hx, hy = random.randint(0, TUK_WIDTH), random.randint(0, TUK_HEIGHT)
     sx, sy = cx, cy
     t = 0.0
-
+    action = 1 if sx < hx else 0
+    frame = 0
 
 def render_world():
     clear_canvas()
@@ -58,10 +60,8 @@ def update_world():
     global frame
     global cx, cy
     global t
-    global action
 
     frame = (frame + 1) % 8
-    action = 1 if cx < hx else 0
 
     if t <= 1.0:
         cx = (1 - t) * sx + t * hx
@@ -70,6 +70,7 @@ def update_world():
     else:
         cx, cy = hx, hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴
         set_new_target_arrow()
+
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 hide_cursor()
