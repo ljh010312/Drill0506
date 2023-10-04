@@ -16,6 +16,8 @@ def load_resources():
 def handle_events():
     global running
     global mx, my
+    global target_exists
+
     events = get_events()
     for event in events:
         if event.type == SDL_QUIT:
@@ -88,11 +90,11 @@ def update_world():
             cy = (1 - t) * sy + t * hy
             t += 0.001
         else:
-
             cx, cy = hx, hy # 캐릭터 위치를 목적지 위치와 정확히 일치시킴
             del points[0]
             set_new_target_arrow()
-
+    elif points:
+        set_new_target_arrow()
 
 open_canvas(TUK_WIDTH, TUK_HEIGHT)
 hide_cursor()
